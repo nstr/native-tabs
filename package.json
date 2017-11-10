@@ -25,7 +25,7 @@
   "homepage": "https://github.com/njnest/native-tabs#readme",
   "peerDependencies": {
     "prop-types": "^15.0.0",
-    "react": "^16.0.0",
-    "react-native": "^0.48.0"
+    "react": "16.0.0-alpha.* || ^16.0.0",
+    "react-native": "^0.40.0"
   }
 }
