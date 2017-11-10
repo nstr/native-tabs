@@ -1,6 +1,6 @@
 {
   "name": "native-tabs",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "React Native Tabs",
   "main": "src/index.js",
   "scripts": {
@@ -23,9 +23,9 @@
     "url": "https://github.com/njnest/native-tabs/issues"
   },
   "homepage": "https://github.com/njnest/native-tabs#readme",
-  "dependencies": {
-    "prop-types": "^15.6.0",
-    "react": "^16.1.0",
-    "react-native": "^0.50.3"
+  "peerDependencies": {
+    "prop-types": "^15.0.0",
+    "react": "^16.0.0",
+    "react-native": "^0.48.0"
   }
 }
