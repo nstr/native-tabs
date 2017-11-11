@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Animated, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Animated, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default class NativeTabs extends Component {
   constructor(props) {
@@ -10,10 +10,10 @@ export default class NativeTabs extends Component {
       underlineOffsetAm: new Animated.ValueXY({x: 0, y: 0})
     };
     this.onLayout = this.onLayout.bind(this);
-    this.getUnderlineStyle = this.getUnderlineStyle.bind(this);
     this.createActiveTabRef = this.createActiveTabRef.bind(this);
 
     this.onTab = this.onTab.bind(this);
+    this.getUnderlineStyle = this.getUnderlineStyle.bind(this);
     this.moveUnderline = this.moveUnderline.bind(this);
   }
   onLayout(event) {
@@ -23,16 +23,6 @@ export default class NativeTabs extends Component {
       underlineOffsetAm: new Animated.ValueXY({x: x, y: 0})
     });
   }
-  getUnderlineStyle() {
-    const t = this.state.underlineOffsetAm.getTranslateTransform();
-    return [
-      styles.underline, {
-        width: this.state.underlineWidthAm,
-      }, {
-        transform: t
-      }
-    ]
-  }
   createActiveTabRef(c) {
     if (c) c.measure((fx, _, width) => {
       this.moveUnderline({offset: fx, width: width});
@@ -41,6 +31,17 @@ export default class NativeTabs extends Component {
   }
   onTab(tab) {
     this.props.onTab(tab);
+  }
+  getUnderlineStyle() {
+    const t = this.state.underlineOffsetAm.getTranslateTransform();
+    const propStyles = this.getStyles(this.props.styles)("underline");
+    return [
+      styles.underline, propStyles, {
+        width: this.state.underlineWidthAm,
+      }, {
+        transform: t
+      }
+    ]
   }
   moveUnderline({offset, width}) {
     if (width) Animated.parallel([
@@ -54,16 +55,20 @@ export default class NativeTabs extends Component {
       })
     ]).start();
   }
+  getStyles(styles) {
+      return (c) => !!styles && !!styles[c] ? styles[c] : null
+  }
   render() {
+    const styleOf = this.getStyles(this.props.styles);
     return (
-      <Animated.View style={styles.tabs}>
+      <Animated.View style={[styles.tabs , styleOf("tabs")]}>
         {
           this.props.tabs.map((tab, index) => {
 
             let style = null;
             let onLayout = null;
             let refs = {};
-            if (this.props.activeTab.name === tab.name) {
+            if (this.props.activeTab.id === tab.id) {
               style = {
                 tab: styles.activeTab,
                 text: styles.activeTabText
@@ -79,9 +84,11 @@ export default class NativeTabs extends Component {
             }
 
             return (
-              <TouchableOpacity key={index} onPress={this.onTab.bind(this, tab)} {...refs}
-                style={style.tab} onLayout={onLayout}>
-                <Text style={style.text}>{tab.name}</Text>
+              <TouchableOpacity key={index}
+                onLayout={onLayout}
+                onPress={this.onTab.bind(this, tab)} {...refs}
+                style={[style.tab, styleOf("tab")]}>
+                <Text style={[style.text, styleOf("tabText")]}>{tab.name}</Text>
               </TouchableOpacity>
             )
           })
@@ -92,10 +99,22 @@ export default class NativeTabs extends Component {
   }
 }
 
-NativeSideBar.propTypes = {
-  tabs: PropTypes.any,
-  activeTab: PropTypes.any,
-  onTab: PropTypes.func
+NativeTabs.propTypes = {
+  tabs: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.any
+  })).isRequired,
+  activeTab: PropTypes.shape({
+    id: PropTypes.any
+  }).isRequired,
+  onTab: PropTypes.func,
+  styles: PropTypes.shape({
+    tabs: View.propTypes.style,
+    tab: TouchableOpacity.propTypes.style,
+    tabText: Text.propTypes.style,
+    activeTab: TouchableOpacity.propTypes.style,
+    activeTabText: Text.propTypes.style,
+    underline: View.propTypes.style
+  })
 }
 
 const styles = StyleSheet.create({
@@ -110,11 +129,11 @@ const styles = StyleSheet.create({
   tab: {
     padding: 8
   },
-  activeTab: {
-    padding: 8
-  },
   tabText: {
     color: "#e1e1e1"
+  },
+  activeTab: {
+    padding: 8
   },
   activeTabText: {
 
@@ -122,7 +141,7 @@ const styles = StyleSheet.create({
   underline: {
     position: "absolute",
     bottom: -1,
-    backgroundColor: "#fbd900",
+    backgroundColor: "#e1e1e1",
     height: 4
   }
 });
