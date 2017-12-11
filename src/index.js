@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Animated, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Animated, StyleSheet, Text, TouchableOpacity, View, ViewPropTypes } from "react-native";
 
 export default class NativeTabs extends Component {
   constructor(props) {
@@ -30,7 +30,7 @@ export default class NativeTabs extends Component {
     this.activeTab = c;
   }
   onTab(tab) {
-    this.props.onTab(tab);
+    if (!this.props.disabled) this.props.onTab(tab);
   }
   getUnderlineStyle() {
     const t = this.state.underlineOffsetAm.getTranslateTransform();
@@ -107,14 +107,19 @@ NativeTabs.propTypes = {
     id: PropTypes.any
   }).isRequired,
   onTab: PropTypes.func,
+  disabled: PropTypes.bool,
   styles: PropTypes.shape({
-    tabs: View.propTypes.style,
+    tabs: ViewPropTypes.style,
     tab: TouchableOpacity.propTypes.style,
     tabText: Text.propTypes.style,
     activeTab: TouchableOpacity.propTypes.style,
     activeTabText: Text.propTypes.style,
-    underline: View.propTypes.style
+    underline: ViewPropTypes.style
   })
+}
+
+NativeTabs.defaultProps = {
+  disabled: false
 }
 
 const styles = StyleSheet.create({

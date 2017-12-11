@@ -21,6 +21,7 @@ Property | Type | Description
 `tabs` | required array | The array consists of objects which must have an id inside an object.
 `activeTab` | required object | The object must have an id.
 `onTab` | required function | The function returns new active tab.
+`disabled` | bool | Disable `onTab` function.
 `styles` | object | An object of react native styles. More details below.
 
 
@@ -35,7 +36,7 @@ Property | Type | Description
 `activeTabText` | Text.propTypes.style | Styles for a text of active tab.
 `underline` | View.propTypes.style | Styles for a moving underline.
 
-## Usage: 
+## Usage:
 
 ```jsx
 import NativeTabs from 'native-tabs';
@@ -70,7 +71,7 @@ class SomeComponent extends React.Component{
     });
   }
   render() {
-    return <NativeTabs tabs={items} 
+    return <NativeTabs tabs={items}
             styles={{
               tabs: styles.tabs,
               tab: styles.tab,
