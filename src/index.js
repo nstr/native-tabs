@@ -95,15 +95,15 @@ export default class NativeTabs extends Component {
             let refs = {};
             if (this.props.activeTab.id === tab.id) {
               style = {
-                tab: [styles.activeTab, styleOf("activeTab")],
-                text: [styles.activeTabText, styleOf("activeTabText")]
+                tab: [styles.tab, styles.activeTab, styleOf("tab"), styleOf("activeTab")],
+                text: [styles.tabText, styles.activeTabText, styleOf("tabText"), styleOf("activeTabText")]
               };
               onLayout = this.onLayoutActiveTab;
               refs = { ref: this.createActiveTabRef };
             } else {
               style = {
-                tab: styles.tab,
-                text: styles.tabText
+                tab: [styles.tab, styleOf("tab")],
+                text: [styles.tabText, styleOf("tabText")]
               };
               onLayout = null;
             }
@@ -112,8 +112,8 @@ export default class NativeTabs extends Component {
               <TouchableOpacity key={index}
                 onLayout={onLayout}
                 onPress={this.onTab.bind(this, tab, index)} {...refs}
-                style={[style.tab, styleOf("tab")]}>
-                <Text style={[style.text, styleOf("tabText")]}>{tab.name}</Text>
+                style={style.tab}>
+                <Text style={style.text}>{tab.name}</Text>
               </TouchableOpacity>
             )
           })
