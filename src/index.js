@@ -95,8 +95,8 @@ export default class NativeTabs extends Component {
             let refs = {};
             if (this.props.activeTab.id === tab.id) {
               style = {
-                tab: styles.activeTab,
-                text: styles.activeTabText
+                tab: [styles.activeTab, styleOf("activeTab")],
+                text: [styles.activeTabText, styleOf("activeTabText")]
               };
               onLayout = this.onLayoutActiveTab;
               refs = { ref: this.createActiveTabRef };
