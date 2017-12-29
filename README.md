@@ -10,8 +10,8 @@ This tiny package was built for React Native via Animated Views from own React N
 
 ## Demo
 
-1. NativeTabs without scroll. A fixed list is best used for a small number of tabs.
-2. NativeTabs with scroll. A scrolling list is best used for a large number of tabs or very wide tabs.
+1. NativeTabs without scroll with a small number of tabs.
+2. NativeTabs with scroll used for a large number of tabs or very wide tabs.
 
 <img src="https://s3-eu-west-1.amazonaws.com/njnest-opensource/npm/nativeTabs.gif" width="300">   <img src="https://s3-eu-west-1.amazonaws.com/njnest-opensource/npm/nativeTabsScroll.gif" width="300">
 
@@ -31,7 +31,6 @@ Property | Type | Description
 `activeTab` | required object | The object must have an id.
 `onTab` | required function | The function returns new active tab.
 `disabled` | bool | Disable `onTab` function.
-`scrollEnabled` | bool | Enables scrolling of the tabs list.
 `styles` | object | An object of react native styles. More details below.
 
 

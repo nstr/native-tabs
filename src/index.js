@@ -8,11 +8,11 @@ export default class NativeTabs extends Component {
     underlineOffsetAm: new Animated.ValueXY({x: 0, y: 0}),
     tabViewWidth: null,
     scrollViewWidth: null,
-    scrollStep: null
+    scrollStep: null,
+    scrollEnabled: true
   }
   componentWillUpdate(nextProps, nextState) {
     if (
-      nextProps.scrollEnabled &&
       nextState.scrollStep === null &&
       !!nextState.tabViewWidth &&
       !!nextState.scrollViewWidth
@@ -21,7 +21,8 @@ export default class NativeTabs extends Component {
   saveStap(tabViewWidth, scrollViewWidth) {
     const scrollStep = (tabViewWidth - scrollViewWidth) / this.props.tabs.length;
     this.setState({
-      scrollStep
+      scrollStep,
+      scrollEnabled: tabViewWidth > scrollViewWidth
     });
   }
   onLayoutTabView = (event) => {
@@ -50,7 +51,7 @@ export default class NativeTabs extends Component {
     this.activeTab = c;
   }
   onTab = (tab, i) => {
-    if (this.props.scrollEnabled) {
+    if (this.state.scrollEnabled) {
       const move = this.state.scrollStep * i;
       const x = this.props.tabs.length / 2 < i ? move + this.state.scrollStep : move;
       this.scrollView.scrollTo({x: x, animated: true});
@@ -122,13 +123,13 @@ export default class NativeTabs extends Component {
       </Animated.View>
     );
 
-    if (this.props.scrollEnabled) {
+    if (this.state.scrollEnabled) {
       return (
         <View style={[styles.wrap , styleOf("wrap")]}>
           <ScrollView
             contentContainerStyle={styles.scrollView}
             directionalLockEnabled={true}
-            horizontal={this.props.scrollEnabled}
+            horizontal={true}
             showsHorizontalScrollIndicator={false}
             ref={ref => this.scrollView = ref}
             onLayout={this.onLayoutScrollView}>
@@ -155,7 +156,6 @@ NativeTabs.propTypes = {
   }).isRequired,
   onTab: PropTypes.func,
   disabled: PropTypes.bool,
-  scrollEnabled: PropTypes.bool,
   styles: PropTypes.shape({
     wrap: ViewPropTypes.style,
     tabs: ViewPropTypes.style,
@@ -169,7 +169,6 @@ NativeTabs.propTypes = {
 
 NativeTabs.defaultProps = {
   disabled: false,
-  scrollEnabled: false
 }
 
 const styles = StyleSheet.create({
