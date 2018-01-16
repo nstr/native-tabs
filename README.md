@@ -27,11 +27,19 @@ npm i native-tabs
 
 Property | Type | Description
 :---|:---|:---
-`tabs` | required array | The array consists of objects which must have an id inside an object.
+`tabs` | required array | The array consists of objects which must have an id inside an object. More details about tab structure below.
 `activeTab` | required object | The object must have an id.
 `onTab` | required function | The function returns new active tab.
 `disabled` | bool | Disable `onTab` function.
 `styles` | object | An object of react native styles. More details below.
+
+## Tab Structure
+
+Property | Type | Description
+:---|:---|:---
+`id` | `string` or `number` | By this id will be handling of active tab.
+`name` | `string` or `number` | The text inside of tab.
+`node` | React Node | Possible to render another react node instead of Text inside of a Tab. In this case `name` does not displayed.
 
 
 ## Styles:
@@ -50,7 +58,7 @@ Property | Type | Description
 
 ```jsx
 import NativeTabs from 'native-tabs';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 const items = [
    {
@@ -63,7 +71,7 @@ const items = [
    },
    {
      id: 333,
-     name: "dolor"
+     node: <View><Text>dolor</Text></View>
    }
 ];
 
