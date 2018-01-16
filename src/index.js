@@ -114,7 +114,11 @@ export default class NativeTabs extends Component {
                 onLayout={onLayout}
                 onPress={this.onTab.bind(this, tab, index)} {...refs}
                 style={style.tab}>
-                <Text style={style.text}>{tab.name}</Text>
+                {
+                  !!tab.node ? tab.node : (
+                    <Text style={style.text}>{tab.name}</Text>
+                  )
+                }
               </TouchableOpacity>
             )
           })
@@ -149,7 +153,15 @@ export default class NativeTabs extends Component {
 
 NativeTabs.propTypes = {
   tabs: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.any
+    id:  PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+    name: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+    node: PropTypes.node
   })).isRequired,
   activeTab: PropTypes.shape({
     id: PropTypes.any
