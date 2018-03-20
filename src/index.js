@@ -74,10 +74,12 @@ export default class NativeTabs extends Component {
       Animated.timing(this.state.underlineOffsetAm, {
         toValue: {x: offset, y: 0},
         duration: 500,
+        useNativeDriver: this.props.useNativeDriver
       }),
       Animated.timing(this.state.underlineWidthAm, {
           toValue: width,
-          duration: 500
+          duration: 500,
+          useNativeDriver: this.props.useNativeDriver
       })
     ]).start();
   }
@@ -176,11 +178,13 @@ NativeTabs.propTypes = {
     activeTab: TouchableOpacity.propTypes.style,
     activeTabText: Text.propTypes.style,
     underline: ViewPropTypes.style
-  })
+  }),
+  useNativeDriver: PropTypes.bool,
 }
 
 NativeTabs.defaultProps = {
   disabled: false,
+  useNativeDriver: false
 }
 
 const styles = StyleSheet.create({
