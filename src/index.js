@@ -77,9 +77,8 @@ export default class NativeTabs extends Component {
         useNativeDriver: this.props.useNativeDriver
       }),
       Animated.timing(this.state.underlineWidthAm, {
-          toValue: width,
-          duration: 500,
-          useNativeDriver: this.props.useNativeDriver
+        toValue: width,
+        duration: 500,
       })
     ]).start();
   }
