@@ -1,6 +1,6 @@
 # native-tabs
 
-This tiny package was built for React Native via Animated Views from own React Native elements without of using of external packages.
+This tiny package witch was built for React Native via Animated Views from own React Native elements without using external packages.
 
 * [Demo](#demo)
 * [Installation](#installation)
